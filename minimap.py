@@ -4,7 +4,8 @@ from math import sqrt
 
 
 class Minimap:
-    def __init__(self, gap: int = 25, scale: int = 50, width: int = 80, height: int = 80):
+    def __init__(self, border_colour, gap: int = 25, scale: int = 50, width: int = 200, height: int = 200):
+        self.border_colour = border_colour
         self.x = gap
         self.y = gap
         self.scale = scale
@@ -13,4 +14,4 @@ class Minimap:
         self.max_depth = int(sqrt((self.width * self.scale) ** 2 + (self.height * self.scale) ** 2))
 
     def draw_border(self, window):
-        rect(window, (0, 0, 0), Rect(self.x, self.y, self.width, self.height))
+        rect(window, self.border_colour, Rect(self.x, self.y, self.width, self.height))
