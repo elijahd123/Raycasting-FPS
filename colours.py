@@ -5,7 +5,7 @@ class Colours:
     blue = [0, 0, 255]
 
     # Black and White Colours
-    white = [0, 0, 0]
+    white = [255, 255, 255]
     black = [0, 0, 0]
 
     # Mixes of RGB Colours
@@ -17,10 +17,9 @@ class Colours:
     back = [100, 100, 100]
 
     # Custom Colours
-    custom = {"foo": "bar"}
+    custom = {}
 
-    @staticmethod
-    def create_colour(red: int, green: int, blue: int, name: str = None):
+    def create_colour(self, red: int, green: int, blue: int, name: str = None):
         colour = [red, green, blue]
 
         if name is not None:

@@ -20,7 +20,7 @@ colours = Colours()
 area = Area(area_constant)
 window = Window()
 minimap = Minimap(colours.back)
-player = Player((minimap.width * minimap.scale) // 2, (minimap.height * minimap.scale) // 2, speed=minimap.scale * 5)
+player = Player((minimap.width * minimap.scale) // 2, (minimap.height * minimap.scale) // 2, speed=minimap.scale * 3)
 
 
 while window.run:
@@ -42,11 +42,11 @@ while window.run:
     # using user input
     player.calculate_movement(keys[pygame.K_w], keys[pygame.K_a], keys[pygame.K_s], keys[pygame.K_d])
 
-    block = area.area[int((player.x * len(area.area[-1])) / (minimap.scale * minimap.width))][
+    """block = area.area[int((player.x * len(area.area[-1])) / (minimap.scale * minimap.width))][
         int((player.y * len(area.area)) / (minimap.scale * minimap.height))]
 
     if block == area.block_char:
-        player.collision_avoid()
+        player.collision_avoid()"""
 
     window.window.fill(colours.black)
 
@@ -56,6 +56,11 @@ while window.run:
 
     minimap.draw_border(window.window)
 
-    # draw minimap
+    for y in range(len(area.area)):
+        for x in range(len(area.area[y])):
+            if area.area[y][x] == area.block_char:
+                minimap.draw_tile(window.window, x, y, len(area.area[y]), len(area.area), colours.block)
+
+    minimap.draw_player(window.window, player.x // minimap.scale, player.y // minimap.scale, player.angle, player.relative_points, colours.white)
 
     pygame.display.update()
