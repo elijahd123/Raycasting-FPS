@@ -8,11 +8,11 @@ import pygame
 area_constant = [
     "########",
     "#      #",
-    "#      #",
+    "# ##   #",
     "#      #",
     "#  #   #",
     "#   #  #",
-    "#      #",
+    "##    ##",
     "########"
 ]
 
@@ -42,11 +42,14 @@ while window.run:
     # using user input
     player.calculate_movement(keys[pygame.K_w], keys[pygame.K_a], keys[pygame.K_s], keys[pygame.K_d])
 
-    """block = area.area[int((player.x * len(area.area[-1])) / (minimap.scale * minimap.width))][
-        int((player.y * len(area.area)) / (minimap.scale * minimap.height))]
+    block = area.area[
+        int((player.y * len(area.area)) / (minimap.scale * minimap.height))
+    ][
+        int((player.x * len(area.area[-1])) / (minimap.scale * minimap.width))
+    ]
 
     if block == area.block_char:
-        player.collision_avoid()"""
+        player.collision_avoid()
 
     window.window.fill(colours.black)
 
