@@ -1,15 +1,18 @@
+import random
+
 from colours import Colours
 from player import Player
 from area import Area
 from window import Window
 from minimap import Minimap
+from realm import Realm
 import pygame
 
 area_constant = [
     "########",
     "#      #",
     "# ##   #",
-    "#      #",
+    "#    # #",
     "#  #   #",
     "#   #  #",
     "##    ##",
@@ -21,7 +24,7 @@ area = Area(area_constant)
 window = Window()
 minimap = Minimap(colours.back)
 player = Player((minimap.width * minimap.scale) // 2, (minimap.height * minimap.scale) // 2, speed=minimap.scale * 3)
-
+realm = Realm(player.casted_rays, window.width, window.height)
 
 while window.run:
     # frame settings
@@ -53,9 +56,9 @@ while window.run:
 
     window.window.fill(colours.black)
 
-    # ray cast
+    realm.draw_background(window.window, colours.sky, colours.back)
 
-    # draw area
+    # ray cast
 
     minimap.draw_border(window.window)
 

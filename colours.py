@@ -13,8 +13,8 @@ class Colours:
 
     # Colours of Elements
     block = [200, 200, 200]
-    interacted_block = [40, 255, 40]
     back = [100, 100, 100]
+    sky = [153, 204, 255]
 
     # Custom Colours
     custom = {}

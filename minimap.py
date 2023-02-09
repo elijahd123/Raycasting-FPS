@@ -1,6 +1,6 @@
 from pygame.draw import rect, polygon
 from pygame import Rect
-from math import sqrt, hypot, atan2, sin, cos, radians, degrees
+from math import sqrt, hypot, atan2, sin, cos
 
 
 class Minimap:
