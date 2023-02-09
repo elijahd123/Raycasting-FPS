@@ -6,6 +6,7 @@ from area import Area
 from window import Window
 from minimap import Minimap
 from realm import Realm
+from raycasting import RayCaster
 import pygame
 
 area_constant = [
@@ -23,8 +24,9 @@ colours = Colours()
 area = Area(area_constant)
 window = Window()
 minimap = Minimap(colours.back)
-player = Player((minimap.width * minimap.scale) // 2, (minimap.height * minimap.scale) // 2, speed=minimap.scale * 3)
-realm = Realm(player.casted_rays, window.width, window.height)
+player = Player(minimap.width // 2, minimap.height // 2)
+raycaster = RayCaster()
+realm = Realm(raycaster.ray_count, window.width, window.height)
 
 while window.run:
     # frame settings
@@ -46,9 +48,9 @@ while window.run:
     player.calculate_movement(keys[pygame.K_w], keys[pygame.K_a], keys[pygame.K_s], keys[pygame.K_d])
 
     block = area.area[
-        int((player.y * len(area.area)) / (minimap.scale * minimap.height))
+        int((player.y * len(area.area)) / minimap.height)
     ][
-        int((player.x * len(area.area[-1])) / (minimap.scale * minimap.width))
+        int((player.x * len(area.area[-1])) / minimap.width)
     ]
 
     if block == area.block_char:
@@ -58,7 +60,7 @@ while window.run:
 
     realm.draw_background(window.window, colours.sky, colours.back)
 
-    # ray cast
+    raycaster.cast(window.window, realm.draw_column, player.angle)
 
     minimap.draw_border(window.window)
 
@@ -67,6 +69,6 @@ while window.run:
             if area.area[y][x] == area.block_char:
                 minimap.draw_tile(window.window, x, y, len(area.area[y]), len(area.area), colours.block)
 
-    minimap.draw_player(window.window, player.x // minimap.scale, player.y // minimap.scale, player.angle, player.relative_points, colours.white)
+    minimap.draw_player(window.window, player.x, player.y, player.angle, player.relative_points, colours.white)
 
     pygame.display.update()

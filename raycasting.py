@@ -1,3 +1,4 @@
+from math import pi, cos
 """def cast_rays():
     start_angle = player_angle - half_fov
 
@@ -33,3 +34,17 @@
                 break
 
         start_angle += step_angle"""
+
+
+class RayCaster:
+    def __init__(self, ray_count: int = 128):
+        self.ray_count = ray_count
+        self.fov = pi / 3
+        self.half_fov = self.fov / 2
+        self.step_angle = self.fov / (self.ray_count - 1)
+
+    def cast(self, window, draw_func, player_angle):
+        for ray_index in range(self.ray_count):
+            angle = player_angle - self.half_fov + ray_index * self.step_angle
+
+

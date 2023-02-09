@@ -4,22 +4,21 @@ from math import sqrt, hypot, atan2, sin, cos
 
 
 class Minimap:
-    def __init__(self, border_colour, gap: int = 25, scale: int = 50, width: int = 200, height: int = 200):
+    def __init__(self, border_colour, gap: int = 25, width: int = 200, height: int = 200):
         self.border_colour = border_colour
         self.x = gap
         self.y = gap
-        self.scale = scale
         self.width = width
         self.height = height
-        self.max_depth = int(sqrt((self.width * self.scale) ** 2 + (self.height * self.scale) ** 2))
+        self.max_depth = int(sqrt(self.width ** 2 + self.height ** 2))
 
     def draw_border(self, window):
         rect(window, self.border_colour, Rect(self.x, self.y, self.width, self.height))
 
     def draw_tile(self, window, x: int, y: int, width_length: int, height_length: int, colour):
-        # calculate width and height of tiles: length of minimap // amount of elements
+
         tile_width, tile_height = self.width // width_length, self.height // height_length
-        # drawing tiles onto minimap
+
         rect(window, colour, Rect(self.x + (x * tile_width), self.y + (y * tile_height), tile_width, tile_height))
 
     def draw_player(self, window, player_x: int, player_y: int, player_angle: float, relative_points, colour):

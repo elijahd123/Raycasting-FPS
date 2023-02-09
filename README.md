@@ -4,7 +4,6 @@ A Simple Ray casting First-Person Shooter using DDA Ray casting Algorithm.
 ## Helpful links
  - https://www.youtube.com/watch?v=NbSee-XM7WA - A useful video about DDA Ray Casting.
  - https://www.youtube.com/watch?v=ebzlMOw79Yw - I have not watched but may be useful.
- - https://www.youtube.com/watch?v=DFZnzCbmlng - I have not watched but may be useful.
 
 ## To-Do
  - Add Ray Casting Algorithm
@@ -13,3 +12,4 @@ A Simple Ray casting First-Person Shooter using DDA Ray casting Algorithm.
  - Refactor old movement system
  - Possibly texture walls
  - Add Sprinting?
+ 
