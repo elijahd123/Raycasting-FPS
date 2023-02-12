@@ -1,5 +1,3 @@
-import random
-
 from colours import Colours
 from player import Player
 from area import Area
@@ -23,9 +21,9 @@ area_constant = [
 colours = Colours()
 area = Area(area_constant)
 window = Window()
-minimap = Minimap(colours.back)
+minimap = Minimap(colours.back, colours.ray)
 player = Player(minimap.width // 2, minimap.height // 2)
-raycaster = RayCaster()
+raycaster = RayCaster(minimap.width, minimap.height)
 realm = Realm(raycaster.ray_count, window.width, window.height)
 
 while window.run:
@@ -60,7 +58,7 @@ while window.run:
 
     realm.draw_background(window.window, colours.sky, colours.back)
 
-    raycaster.cast(window.window, realm.draw_column, player.angle)
+    ray_ends = raycaster.cast(window.window, realm.calculate_and_draw_column, player.angle, (player.x + minimap.x, player.y + minimap.y))
 
     minimap.draw_border(window.window)
 
@@ -68,6 +66,8 @@ while window.run:
         for x in range(len(area.area[y])):
             if area.area[y][x] == area.block_char:
                 minimap.draw_tile(window.window, x, y, len(area.area[y]), len(area.area), colours.block)
+
+    minimap.draw_rays(window.window, (player.x + minimap.x, player.y + minimap.y), ray_ends)
 
     minimap.draw_player(window.window, player.x, player.y, player.angle, player.relative_points, colours.white)
 

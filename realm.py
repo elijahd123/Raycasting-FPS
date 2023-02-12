@@ -13,6 +13,11 @@ class Realm:
         rect(window, sky_colour, Rect(0, 0, self.width, self.height / 2))
         rect(window, floor_colour, Rect(0, self.height / 2, self.width, self.height))
 
+    def calculate_and_draw_column(self, window, distance, column):
+        colour = [0 for _ in range(3)]
+        height = distance
+        self.draw_column(window, colour, column, height)
+
     def draw_column(self, window, colour, column: int, height: int):
         y_gap = (self.height - height) / 2
         x = (column + 0.5) * self.column_width

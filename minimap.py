@@ -1,16 +1,17 @@
-from pygame.draw import rect, polygon
+from pygame.draw import rect, polygon, line
 from pygame import Rect
 from math import sqrt, hypot, atan2, sin, cos
 
 
 class Minimap:
-    def __init__(self, border_colour, gap: int = 25, width: int = 200, height: int = 200):
+    def __init__(self, border_colour, ray_colour, gap: int = 25, width: int = 200, height: int = 200):
         self.border_colour = border_colour
         self.x = gap
         self.y = gap
         self.width = width
         self.height = height
         self.max_depth = int(sqrt(self.width ** 2 + self.height ** 2))
+        self.ray_colour = ray_colour
 
     def draw_border(self, window):
         rect(window, self.border_colour, Rect(self.x, self.y, self.width, self.height))
@@ -33,3 +34,7 @@ class Minimap:
             points.append([self.x + player_x + (dist * cos(angle)), self.y + player_y + (dist * sin(angle))])
 
         polygon(window, colour, points)
+
+    def draw_rays(self, window, player_coords, ray_ends):
+        for end in ray_ends:
+            line(window, self.ray_colour, player_coords, end)

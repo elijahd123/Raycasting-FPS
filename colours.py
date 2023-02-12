@@ -15,6 +15,7 @@ class Colours:
     block = [200, 200, 200]
     back = [100, 100, 100]
     sky = [153, 204, 255]
+    ray = [150, 150, 150]
 
     # Custom Colours
     custom = {}

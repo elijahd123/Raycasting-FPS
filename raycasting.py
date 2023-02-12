@@ -1,4 +1,6 @@
-from math import pi, cos
+from math import pi, sqrt, cos, sin
+from pygame.draw import line
+
 """def cast_rays():
     start_angle = player_angle - half_fov
 
@@ -37,14 +39,18 @@ from math import pi, cos
 
 
 class RayCaster:
-    def __init__(self, ray_count: int = 128):
+    def __init__(self, width: int, height: int, ray_count: int = 128):
         self.ray_count = ray_count
         self.fov = pi / 3
         self.half_fov = self.fov / 2
         self.step_angle = self.fov / (self.ray_count - 1)
+        self.max_length = sqrt(width**2 + height**2)
 
-    def cast(self, window, draw_func, player_angle):
+    def cast(self, window, draw_func, player_angle, player_coords):
+        angle = pi / 2 + player_angle - self.half_fov - self.step_angle
         for ray_index in range(self.ray_count):
-            angle = player_angle - self.half_fov + ray_index * self.step_angle
-
-
+            angle += self.step_angle
+            ray_ends = []
+            distance = -1
+            # create ray and calc distance, and append end point to ray_ends
+            draw_func(window, distance, ray_index)
