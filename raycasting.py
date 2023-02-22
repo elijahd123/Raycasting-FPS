@@ -1,41 +1,4 @@
-from math import pi, sqrt, cos, sin
-from pygame.draw import line
-
-"""def cast_rays():
-    start_angle = player_angle - half_fov
-
-    for ray in range(casted_rays):
-        for depth in range(max_depth):
-            target_x = player_x - math.sin(start_angle) * depth
-            target_y = player_y + math.cos(start_angle) * depth
-
-            target_map_x, target_map_y = int(target_x / two_d_block_width), int(target_y / two_d_block_height)
-
-            block = two_d_area[target_map_y][target_map_x]
-            if block == block_char:
-                pygame.draw.rect(win, (40, 255, 40), pygame.Rect(target_map_x * two_d_block_width,
-                                                                 target_map_y * two_d_block_height, two_d_block_width,
-                                                                 two_d_block_height))
-
-                pygame.draw.line(win, (255, 255, 0), (player_x, player_y), (target_x, target_y), 3)
-
-                # wall shading
-                colour = (255 / (1 + (depth ** 2) * 0.0001))
-
-                # fix fisheye effect
-                depth *= math.cos(player_angle - start_angle)
-
-                # calculate wall height
-                wall_height = 21000 / (depth + 0.0001)
-
-                # draw 3d area
-                pygame.draw.rect(win, (colour, colour, colour),
-                                 pygame.Rect((width // 2) + ray * scale, (height // 2) - (wall_height // 2), scale,
-                                             wall_height))
-
-                break
-
-        start_angle += step_angle"""
+from math import pi, sqrt, cos, sin, tan
 
 
 class RayCaster:
@@ -44,13 +7,29 @@ class RayCaster:
         self.fov = pi / 3
         self.half_fov = self.fov / 2
         self.step_angle = self.fov / (self.ray_count - 1)
-        self.max_length = sqrt(width**2 + height**2)
+        self.max_length = sqrt(width ** 2 + height ** 2)
 
-    def cast(self, window, draw_func, player_angle, player_coords):
+    def cast(self, window, draw_func, player_angle, player_coords, width, height, max_depth, area, get_tile, block_char):
         angle = pi / 2 + player_angle - self.half_fov - self.step_angle
+        ray_ends = []
+        max_dist = sqrt((width ** 2) + (height ** 2))
         for ray_index in range(self.ray_count):
             angle += self.step_angle
-            ray_ends = []
-            distance = -1
+            max_dist_point = (player_coords[0] + max_dist * cos(angle), player_coords[1] + max_dist * sin(angle))
+            y_per_x = tan(angle)
+            x_per_y = 1/y_per_x
+            tot_y = 0
+            tot_x = 0
+            loop = 0
+            while get_tile(area, (player_coords[0] + tot_x, player_coords[1] + tot_y)) != block_char or loop < 10:
+                loop += 1
+                if abs(tot_x + x_per_y) > abs(tot_y + y_per_x):
+                    tot_y += y_per_x
+                else: tot_x += x_per_y
+
+            distance = sqrt((tot_x ** 2) + (tot_y ** 2))
+            ray_ends.append((player_coords[0] + distance * cos(angle), player_coords[1] + distance * sin(angle)))
             # create ray and calc distance, and append end point to ray_ends
             draw_func(window, distance, ray_index)
+
+        return ray_ends
