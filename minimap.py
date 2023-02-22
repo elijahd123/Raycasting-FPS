@@ -13,6 +13,18 @@ class Minimap:
         self.max_depth = int(sqrt(self.width ** 2 + self.height ** 2))
         self.ray_colour = ray_colour
 
+    def get_tile(self, area, coord):
+        try:
+            tile = area[
+                int((coord[1] * len(area)) / self.height)
+            ][
+                int((coord[0] * len(area[-1])) / self.width)
+            ]
+        except:
+            tile = area[0][0]
+
+        return tile
+
     def draw_border(self, window):
         rect(window, self.border_colour, Rect(self.x, self.y, self.width, self.height))
 

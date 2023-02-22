@@ -45,11 +45,7 @@ while window.run:
     # using user input
     player.calculate_movement(keys[pygame.K_w], keys[pygame.K_a], keys[pygame.K_s], keys[pygame.K_d])
 
-    block = area.area[
-        int((player.y * len(area.area)) / minimap.height)
-    ][
-        int((player.x * len(area.area[-1])) / minimap.width)
-    ]
+    block = minimap.get_tile(area.area, (player.x, player.y))
 
     if block == area.block_char:
         player.collision_avoid()
@@ -58,7 +54,7 @@ while window.run:
 
     realm.draw_background(window.window, colours.sky, colours.back)
 
-    ray_ends = raycaster.cast(window.window, realm.calculate_and_draw_column, player.angle, (player.x + minimap.x, player.y + minimap.y))
+    ray_ends = raycaster.cast(window.window, realm.calculate_and_draw_column, player.angle, (player.x + minimap.x, player.y + minimap.y), minimap.width, minimap.height, minimap.max_depth, area.area, minimap.get_tile, area.block_char)
 
     minimap.draw_border(window.window)
 
